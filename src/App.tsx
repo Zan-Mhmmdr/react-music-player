@@ -22,19 +22,19 @@ function App() {
       path: "../src/assets/audio/seigi-shikkou.mp3",
       name: "The Hero!!",
       artist: "JAM Project",
-      img: "saitama.jpg",
+      img: "../src/assets/img/saitama.jpg",
     },
     {
       path: "../src/assets/audio/same-blue.mp3",
       name: "Same Blue",
       artist: "Official HIGE DANdism",
-      img: "chono-hina.jpg",
+      img: "../src/assets/img/chono-hina.jpg",
     },
   ], [])
 
   useEffect(() => {
     // Initialize the audio when the component mounts
-    musicRef.current = new Audio(songs[0].path);
+    musicRef.current = new Audio(songs[currentSongIndex].path);
 
     // Event listener untuk mengupdate progress saat musik diputar
     musicRef.current.addEventListener('timeupdate', updateProgress);
@@ -87,15 +87,15 @@ function App() {
   }
 
   // Fungsi untuk pindah ke lagu sebelumnya
-  const prevSong = () => {
+  const prevSong = ():void => {
     setCurrentSongIndex((prevIndex) => (prevIndex === 0 ? songs.length - 1 : prevIndex - 1));
   };
 
   // Fungsi untuk pindah ke lagu berikutnya
-  const nextSong = () => {
+  const nextSong = ():void => {
     setCurrentSongIndex((prevIndex) => (prevIndex === songs.length - 1 ? 0 : prevIndex + 1));
   };
-  
+
   return (
     <>
       <div className="background">
@@ -104,11 +104,11 @@ function App() {
 
       <div className="container">
         <div className="player-img">
-          <img src={saitama} alt="img-music" className="active" />
+          <img src={songs[currentSongIndex].img} alt="img-music" className="active" />
         </div>
 
-        <h2>{songs[0].name}</h2>
-        <h3>{songs[0].artist}</h3>
+        <h2>{songs[currentSongIndex].name}</h2>
+        <h3>{songs[currentSongIndex].artist}</h3>
 
         <div className="player-progress" onClick={(e) => setProgressBar(e)}>
           <div
