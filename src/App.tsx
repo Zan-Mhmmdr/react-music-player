@@ -1,8 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import './App.css';
 import bg from './assets/img/bg.jpeg';
-import chonoHina from './assets/img/chono-hina.jpg';
-import saitama from './assets/img/saitama.jpg';
 
 type Song = {
   path: string;
@@ -16,6 +14,8 @@ function App() {
   const musicRef = useRef<HTMLAudioElement | null>(null); // Using useRef to store the audio object
   const [progress, setProgress] = useState(0); // state untuk progress
   const [currentSongIndex, setCurrentSongIndex] = useState(0); // state untuk index lagu yang sedang diputar
+  const [currentTimeFormatted, setCurrentTimeFormatted] = useState<string>('00:00'); // Waktu yang sedang diputar
+  const [durationFormatted, setDurationFormatted] = useState<string>('00:00'); // Durasi total musik
 
   const songs: Song[] = useMemo(() => [
     {
@@ -30,6 +30,18 @@ function App() {
       artist: "Official HIGE DANdism",
       img: "../src/assets/img/chono-hina.jpg",
     },
+    {
+      path: "../src/assets/audio/kaiju.mp3",
+      name: "Kaiju",
+      artist: "SAKANACTION",
+      img: "../src/assets/img/badeni.webp",
+    },
+    {
+      path: "../src/assets/audio/spiral.mp3",
+      name: "Spiral",
+      artist: "LONGMAN",
+      img: "../src/assets/img/rudeus.png",
+    },
   ], [])
 
   useEffect(() => {
@@ -39,6 +51,8 @@ function App() {
     // Event listener untuk mengupdate progress saat musik diputar
     musicRef.current.addEventListener('timeupdate', updateProgress);
 
+    console.log("Current song:", songs[currentSongIndex].name);
+
     // Clean up the audio when the component unmounts
     return () => {
       if (musicRef.current) {
@@ -46,13 +60,26 @@ function App() {
         musicRef.current = null;
       }
     };
-  }, [songs]);
+  }, [songs, currentSongIndex]);
 
   // Update progress setiap kali timeupdate terjadi
   const updateProgress = (): void => {
     if (musicRef.current) {
-      setProgress((musicRef.current.currentTime / musicRef.current.duration) * 100);
+      const currentTime = musicRef.current.currentTime;
+      const duration = musicRef.current.duration;
+      if (duration > 0) {
+        setProgress((currentTime / duration) * 100);
+      }
+      setCurrentTimeFormatted(formatTime(currentTime)); // Memperbarui waktu yang sedang diputar
+      setDurationFormatted(formatTime(duration)); // Memperbarui durasi total
+
     }
+  };
+
+  const formatTime = (time: number): string => {
+    const minutes = Math.floor(time / 60); // Menghitung menit
+    const seconds = Math.floor(time % 60); // Menghitung detik
+    return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
   };
 
   const togglePlay = (): void => {
@@ -87,12 +114,12 @@ function App() {
   }
 
   // Fungsi untuk pindah ke lagu sebelumnya
-  const prevSong = ():void => {
+  const prevSong = (): void => {
     setCurrentSongIndex((prevIndex) => (prevIndex === 0 ? songs.length - 1 : prevIndex - 1));
   };
 
   // Fungsi untuk pindah ke lagu berikutnya
-  const nextSong = ():void => {
+  const nextSong = (): void => {
     setCurrentSongIndex((prevIndex) => (prevIndex === songs.length - 1 ? 0 : prevIndex + 1));
   };
 
@@ -116,9 +143,8 @@ function App() {
             style={{ width: `${progress}%` }}
           ></div>
           <div className="music-duration">
-            <span>{(musicRef.current ? musicRef.current.currentTime.toFixed(2) : '0.00')}</span>
-            <span>{(musicRef.current ? musicRef.current.duration.toFixed(2) : '0.00')}</span>
-
+            <span>{currentTimeFormatted}</span>
+            <span>{durationFormatted}</span>
           </div>
         </div>
 
