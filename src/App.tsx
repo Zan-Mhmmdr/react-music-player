@@ -42,6 +42,12 @@ function App() {
       artist: "LONGMAN",
       img: "../src/assets/img/rudeus.png",
     },
+    {
+      path: "../src/assets/audio/aporia.mp3",
+      name: "Aporia",
+      artist: "Yorushika",
+      img: "../src/assets/img/aporia.webp",
+    },
   ], [])
 
   useEffect(() => {
