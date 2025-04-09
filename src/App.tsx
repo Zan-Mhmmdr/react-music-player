@@ -72,7 +72,6 @@ function App() {
       }
       setCurrentTimeFormatted(formatTime(currentTime)); // Memperbarui waktu yang sedang diputar
       setDurationFormatted(formatTime(duration)); // Memperbarui durasi total
-
     }
   };
 
