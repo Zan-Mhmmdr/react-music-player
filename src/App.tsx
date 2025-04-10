@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import './App.css';
 import bg from './assets/img/bg.jpeg';
+import UseMemo from './components/useMemo';
 
 type Song = {
   path: string;
@@ -16,6 +17,7 @@ function App() {
   const [currentSongIndex, setCurrentSongIndex] = useState(0); // state untuk index lagu yang sedang diputar
   const [currentTimeFormatted, setCurrentTimeFormatted] = useState<string>('00:00'); // Waktu yang sedang diputar
   const [durationFormatted, setDurationFormatted] = useState<string>('00:00'); // Durasi total musik
+  const [volume, setVolume] = useState(1); // Volume awal
 
   const songs: Song[] = useMemo(() => [
     {
@@ -68,6 +70,15 @@ function App() {
     };
   }, [songs, currentSongIndex]);
 
+  useEffect(() => {
+    if (musicRef.current) {
+      musicRef.current.volume = volume;
+    }
+  }, [volume]);
+
+
+  console.log("Volume:", volume);
+
   // Update progress setiap kali timeupdate terjadi
   const updateProgress = (): void => {
     if (musicRef.current) {
@@ -111,7 +122,7 @@ function App() {
     }
   };
 
-  const setProgressBar = (e: React.MouseEvent<HTMLDivElement>) => {
+  const setProgressBar = (e: React.MouseEvent<HTMLDivElement>): void => {
     const clickX = e.nativeEvent.offsetX;
     if (musicRef.current) {
       musicRef.current.currentTime = (clickX / e.currentTarget.clientWidth) * musicRef.current.duration;
@@ -154,20 +165,38 @@ function App() {
         </div>
 
         <div className="player-controls">
-          <i
-            className="fa-solid fa-backward"
-            title="Previous"
-            onClick={prevSong}></i>
-          <i
-            className={`fa-solid play-button ${isPlaying ? 'fa-pause' : 'fa-play'}`}
-            title="Play"
-            id="play"
-            onClick={togglePlay}
-          ></i>
-          <i
-            className="fa-solid fa-forward"
-            title="Next"
-            onClick={nextSong} ></i>
+          <div className='player-controls-container'>
+            <i
+              className="fa-solid fa-backward"
+              title="Previous"
+              onClick={prevSong}></i>
+            <i
+              className={`fa-solid play-button ${isPlaying ? 'fa-pause' : 'fa-play'}`}
+              title="Play"
+              id="play"
+              onClick={togglePlay}
+            ></i>
+            <i
+              className="fa-solid fa-forward"
+              title="Next"
+              onClick={nextSong} ></i>
+            <div className='volume-control'>
+              <i
+                className={`fa-solid ${volume > 0 ? 'fa-volume-high' : 'fa-volume-xmark'}`}
+                style={{ marginRight: '8px' }}
+                title="Volume"
+                onClick={() => setVolume(volume > 0 ? 0 : 1)}
+              ></i>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </>

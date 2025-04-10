@@ -98,7 +98,7 @@ h3 {
 }
 
 .progress {
-  background-color:  #212121;
+  background-color: #212121;
   height: 100%;
   border-radius: 10px;
   transition: width 0.1s linear;
@@ -119,6 +119,12 @@ h3 {
   top: -15px;
 }
 
+.player-controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .fa-solid {
   font-size: 30px;
   color: #666;
@@ -136,4 +142,51 @@ h3 {
   position: relative;
   top: 3px;
   font-size: 44px;
+}
+
+.volume-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.volume-control i {
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.fa-volume-high .fa-volume-xmark {
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.volume-control input[type="range"] {
+  width: 50px;
+  height: 5px;
+  border-radius: 5px;
+  background: #ccc; /* warna track */
+  cursor: pointer;
+  appearance: none;
+}
+
+/* Bagian yang bisa digeser (thumb) */
+.volume-control input[type="range"]::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #000000; /* warna bulatan */
+  border: none;
+  margin-top: -4px;
+}
+
+/* Track (jalurnya) */
+.volume-control input[type="range"]::-webkit-slider-runnable-track {
+  height: 5px;
+  border-radius: 5px;
+  background: #ababab; /* warna track */
 }
