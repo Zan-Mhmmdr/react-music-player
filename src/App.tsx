@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef, useMemo } from 'react';
 import './App.css';
 import bg from './assets/img/bg.jpeg';
-import UseMemo from './components/useMemo';
 
 type Song = {
   path: string;
