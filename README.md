@@ -1,50 +1,34 @@
-# React + TypeScript + Vite
+# 🎵 React Music Player
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Project ini adalah **Music Player App** yang dibuat dengan **React**. Aplikasi ini memungkinkan user untuk memutar audio, menavigasi antar lagu, dan melihat daftar lagu yang tersedia.
 
-Currently, two official plugins are available:
+## ⚙️ Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- React + Vite
+- TypeScript (opsional)
+- TailwindCSS (opsional)
+- React Icons
+- Howler.js / HTML5 `<audio>` (tergantung implementasi audio player)
 
-## Expanding the ESLint configuration
+🧠 Fitur
+Play / Pause musik
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Next / Previous track
 
-- Configure the top-level `parserOptions` property like this:
+UI/UX sederhana dan intuitif
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+## 🚀 Cara Menjalankan
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+1. **Clone repository:**
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+git clone https://github.com/Zan-Mhmmdr/react-music-player.git
+cd react-music-player
+
+2. Install dependencies:
+  npm install
+
+3. Jalankan development server:
+   npm run dev
+
+App akan jalan di http://localhost:5173
